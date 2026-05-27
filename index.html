@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zatrzymaj się. Przemyśl to.</title>
+    <style>
+        :root {
+            --bg-color: #0f1115;
+            --card-bg: #161920;
+            --accent-red: #ff4655;
+            --accent-blue: #00b4d8;
+            --accent-gold: #d4af37;
+            --accent-green: #2ecc71;
+            --text-main: #f8f9fa;
+            --text-muted: #9ca3af;
+            --border-color: #232834;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 100%;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            text-align: center;
+            position: relative;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-gold), var(--accent-blue));
+            border-radius: 16px 16px 0 0;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        /* Sekcja Liczników obok siebie */
+        .counters-wrapper {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+        }
+
+        .counter-box {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .counter-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent-blue);
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .counter-title.success-title {
+            color: var(--accent-green);
+        }
+
+        .counter-time {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* Grid z argumentami */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            text-align: left;
+            margin-bottom: 35px;
+        }
+
+        @media (max-width: 650px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .card:hover {
+            border-color: rgba(255, 70, 85, 0.3);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .card-icon {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Sekcja alternatywy */
+        .alternative-box {
+            border-top: 1px solid var(--border-color);
+            padding-top: 25px;
+            margin-top: 25px;
+        }
+
+        .alternative-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        .alternative-text {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .highlight {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .footer-note {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            color: rgba(156, 163, 175, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Nie pobieraj tego gowna.</h1>
+        <p class="subtitle">Wpisałeś ten adres z automatu, szukając szybkiej dopaminy. Zatrzymaj się na chwilę, przeczytaj to o czym myślisz podczas odinstalowywania</p>
+
+        <!-- Sekcja Liczników -->
+        <div class="counters-wrapper">
+            <div class="counter-box">
+                <div class="counter-title">Nie grałeś już od</div>
+                <div class="counter-time" id="live-counter">00d 00g 00m 00s</div>
+            </div>
+            
+            <div class="counter-box" style="border-color: rgba(46, 204, 113, 0.2);">
+                <div class="counter-title success-title">Powstrzymane impulsy</div>
+                <div class="counter-time" id="impulse-counter" style="color: var(--accent-green);">0</div>
+            </div>
+        </div>
+
+        <!-- Lista argumentów (Kubeł zimnej wody) -->
+        <div class="grid">
+            <div class="card">
+                <span class="card-icon">🎭</span>
+                <div class="card-title">Iluzja dobrej zabawy</div>
+                <div class="card-desc">Klasycznie moze jedna, dwie gierki pojda dobrze, potem druzyna zintuje, dostaniesz stompa mimo ze dobrze zagrasz, nie masz na to wplywu</div>
+            </div>
+            
+            <div class="card">
+                <span class="card-icon">⚙️</span>
+                <div class="card-title">Marnowanie potencjału PC</div>
+                <div class="card-desc">Masz nowy, potężny komputer. Naprawde chcesz na nim grac w to gowno?</div>
+            </div>
+
+            <div class="card">
+                <span class="card-icon">🧠</span>
+                <div class="card-title">Złodziej skupienia i czasu</div>
+                <div class="card-desc">LoL niszczy Twoją zdolność skupienia na głębszych historiach przez wieczne bombardowanie szybkim zyskiem. Każdy mecz pogłębia ten stan.</div>
+            </div>
+
+            <div class="card">
+                <span class="card-icon">⏳</span>
+                <div class="card-title">Efekt czystej karty</div>
+                <div class="card-desc">Pamiętasz tylko te dobre momenty, a zapominasz o wściekłości, która towarzyszyła Ci jak grałeś ostatnio. Nie daj się złapać na tę samą sztuczkę po raz kolejny.</div>
+            </div>
+        </div>
+
+        <!-- Konstruktywne wyjście -->
+        <div class="alternative-box">
+            <div class="alternative-title">⚔️ Twoja alternatywa na dziś:</div>
+            <p class="alternative-text">
+                Zamknij tę kartę. Wyłącz przeglądarkę. Odpal np <span class="highlight">Kingdom Come: Deliverance</span>. <br>
+                Zrób za karę 20 pompek / 10 podciagniec / 15 dipow za to, że przyszło ci do głowy instalowanie lola. Wyjdź, i nie wracaj. Czas leci, niedługo kompletnie zapomnisz o checi grania w to.
+            </p>
+        </div>
+
+        <div class="footer-note">
+            Strona wygenerowana jako osobisty hamulec bezpieczeństwa. Wybierz mądrze.
+        </div>
+    </div>
+
+    <script>
+        // 1. DYNAMICZNY LICZNIK CZASU (Data zahardkodowana w przeszłości - nie resetuje się)
+        const startDate = new Date("2026-05-27T22:00:00").getTime();
+
+        function updateCounter() {
+            const now = new Date().getTime();
+            const difference = now - startDate;
+
+            if (difference < 0) {
+                document.getElementById("live-counter").innerHTML = "Właśnie zaczynasz!";
+                return;
+            }
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            // Formatowanie z zerami wiodącymi
+            const dDisplay = days < 10 ? "0" + days : days;
+            const hDisplay = hours < 10 ? "0" + hours : hours;
+            const mDisplay = minutes < 10 ? "0" + minutes : minutes;
+            const sDisplay = seconds < 10 ? "0" + seconds : seconds;
+
+            document.getElementById("live-counter").innerHTML = 
+                `${dDisplay}d ${hDisplay}g ${mDisplay}m ${sDisplay}s`;
+        }
+
+        // Aktualizacja co sekundę
+        setInterval(updateCounter, 1000);
+        updateCounter();
+
+        // 2. LICZNIK POWSTRZYMANYCH IMPULSÓW (localStorage)
+        let impulseCount = localStorage.getItem('lol_prevention_counter');
+        if (impulseCount === null) {
+            impulseCount = 0;
+        } else {
+            impulseCount = parseInt(impulseCount);
+        }
+
+        // Każde załadowanie strony oznacza automatyczne powstrzymanie jednego impulsu
+        impulseCount += 1;
+        localStorage.setItem('lol_prevention_counter', impulseCount);
+
+        // Wyświetlenie wyniku w boksie
+        document.getElementById("impulse-counter").innerHTML = impulseCount;
+    </script>
+</body>
+</html>
